@@ -1,0 +1,568 @@
+>>> import this
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+
+
+LESSON 1 & 2
+
+
+How to run a py script without using python3 everytime in the terminal
+	#!/usr/bin/env python3
+	
+Insert a breakpoint
+	# Manual way of inserting breakpoints in python
+	# May insert this line anywhere in a python script and when it runs it will jump into the debugger from that line on.
+	import pdb; pdb.set_trace()     # Launch debugger
+	
+Debugging
+	Python uses the pdb (Python Debugger) for stepping through and debugging much like the gdb (GNU Debugger) in C++. Run the python script with the -i flag to start the debugger. Type "quit" to exit.
+	
+Spacing
+	Python defaults to 4 spaces when indenting. Tabs break the interpreter. All nested code is scoped by indentation. 
+
+Command line arguments
+	if len(sys.argv) < 3:
+	    raise SystemExit('Usage: <scriptname.py> number1 number2')
+	number1 = sys.argv[1]
+	number2 = sys.argv[2]
+	
+	print('result = {}{}'.format(number1, number2))
+	
+	argv[0] - The name of the executable
+	argv[1] - The first command line argument
+	.
+	.
+	.
+
+Print formatting
+	{:<10s}
+		:    starts the formatting
+		<   refers to left justified
+		>   refers to right justified
+		10 refers to number of characters to print
+		s   string
+		d   decimal
+		f    float 
+		.2  number of decimal places
+
+>>> name = 'IBM'
+>>> shares = 100
+>>> price = 32.2
+>>> print(name, shares, price)
+IBM 100 32.2
+>>> print('%10s %10d %10.2f' % (name, shares, price))
+       IBM        100      32.20
+>>> print('{:>10s} {:>10d} {:>10.2f}'.format(name, shares, price))
+       IBM        100      32.20
+>>> print('{:<10s} {:<10d} {:<10.2f}'.format(name, shares, price))
+IBM        100        32.20 
+
+
+Reading CSV file, parsing file I/O, String manipulation
+>>> f = open('data.csv', 'r')
+>>> f
+<_io.TextIOWrapper name='data.csv' mode='r' encoding='UTF-8'>
+>>> data = f.read()
+>>> data
+'AA,2007-06-11,100,32.20\nIBM,2007-05-13,50,91.10\nCAT,2006-09-23,150,83.44\nMSFT,2007-05-17,200,51.23\nGE,2006-02-01,95,40.37\nMSFT,2006-10-31,50,65.10\nIBM,2006-07-09,100,70.44'
+>>> print(data)
+AA,2007-06-11,100,32.20
+IBM,2007-05-13,50,91.10
+CAT,2006-09-23,150,83.44
+MSFT,2007-05-17,200,51.23
+GE,2006-02-01,95,40.37
+MSFT,2006-10-31,50,65.10
+IBM,2006-07-09,100,70.44
+>>> f.close()
+>>> clear
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'clear' is not defined
+>>> f
+<_io.TextIOWrapper name='data.csv' mode='r' encoding='UTF-8'>
+>>> f = open('data.csv' 'r')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'data.csvr'
+>>> for line in f:
+...    print(line)
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: I/O operation on closed file.
+>>> for line in f:
+...    print(line)
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: I/O operation on closed file.
+>>> f = open('data.csv' 'r')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'data.csvr'
+>>> f = open('data.csv', 'r')
+>>> for line in f:
+...    print(line)
+... 
+AA,2007-06-11,100,32.20
+
+IBM,2007-05-13,50,91.10
+
+CAT,2006-09-23,150,83.44
+
+MSFT,2007-05-17,200,51.23
+
+GE,2006-02-01,95,40.37
+
+MSFT,2006-10-31,50,65.10
+
+IBM,2006-07-09,100,70.44
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> clear
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'clear' is not defined
+>>> f.close()
+>>> with open('data.csv', 'r') as f:
+...     data = f.read()
+... 
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> data
+'AA,2007-06-11,100,32.20\nIBM,2007-05-13,50,91.10\nCAT,2006-09-23,150,83.44\nMSFT,2007-05-17,200,51.23\nGE,2006-02-01,95,40.37\nMSFT,2006-10-31,50,65.10\nIBM,2006-07-09,100,70.44'
+>>> data[0]
+'A'
+>>> data[-1]
+'4'
+>>> data[0:23]
+'AA,2007-06-11,100,32.20'
+>>> data[3:23]
+'2007-06-11,100,32.20'
+>>> data[:23]
+'AA,2007-06-11,100,32.20'
+>>> data[-5:]
+'70.44'
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> len(line)
+24
+>>> c = 'hello'
+>>> d = 'world'
+>>> c + d
+'helloworld'
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> line + \n
+  File "<stdin>", line 1
+    line + \n
+            ^
+SyntaxError: unexpected character after line continuation character
+>>> line = line + \n
+  File "<stdin>", line 1
+    line = line + \n
+                   ^
+SyntaxError: unexpected character after line continuation character
+>>> line = line + '\n'
+>>> line
+'IBM,2006-07-09,100,70.44\n'
+>>> line.strip()
+'IBM,2006-07-09,100,70.44'
+>>> line
+'IBM,2006-07-09,100,70.44\n'
+>>> line = line.strip()
+>>> line
+'IBM,2006-07-09,100,70.44'
+>>> line.replace('IBM', 'BOB')
+'BOB,2006-07-09,100,70.44'
+>>> parts = line.split(',')
+>>> parts
+['IBM', '2006-07-09', '100', '70.44']
+>>> parts[0]
+'IBM'
+>>> parts[1]
+'2006-07-09'
+>>> parts[0] = parts[0].strip('B')
+>>> parts[0]
+'IBM'
+>>> parts[0] = parts[0].strip('M')
+>>> parts
+['IB', '2006-07-09', '100', '70.44']
+>>> parts[0]
+'IB'
+>>> result = parts[2] + parts[3]
+>>> result
+'10070.44'
+>>> result = int(parts[2]) + float(parts[3])
+>>> result
+170.44
+>>> parts[2] = int(parts[2])
+>>> parts[3] = float(parts[3])
+>>> parts[2] + parts[3]
+170.44
+
+
+LESSON 3
+
+
+Python script to read CSV file and parse the input
+	#!/usr/bin/env python3
+	# port.py
+	total = 0.0
+	#f = open('data.csv', 'r')      # Old way to deal with files, depends on closing file at end
+	with open('data.csv', 'r') as f:
+	    headers = next(f)           # Skip a single line of input
+	    for line in f:
+	        line = line.strip()     # Strip whitespace
+	        parts = line.split(',') # Split into pieces by comma
+	        parts[2] = int(parts[2])
+	        parts[3] = float(parts[3])
+	        #print(parts)
+	        total += parts[2] * parts[3]
+	print('Total cost', total)
+	
+	
+Using standard library csv reader
+The standard library CSV has great utility for reading in a CSV file and cleaning up all the data so you don't have to manually strip off or clean up the data.
+	#!/usr/bin/env python3
+	# port.py
+	import csv
+	total = 0.0
+	#f = open('data.csv', 'r')      # Old way to deal with files, depends on closing file at end
+	with open('data.csv', 'r') as f:
+	    rows = csv.reader(f)
+	    headers = next(f)           # Skip a single line of input
+	    for row in rows:
+	        row[2] = int(row[2])
+	        row[3] = float(row[3])
+	        total += row[2] * row[3]
+print('Total cost', total)
+
+
+LESSON 4
+
+
+Functions
+>>> def greeting(name):
+...     print('Hello', name)
+... 
+>>> greeting('Guido')
+Hello Guido
+>>> def add(x, y):
+...     result = x + y
+...     return result
+... 
+>>> add(2,3)
+5
+>>> x
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'x' is not defined
+>>> y
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'y' is not defined
+>>> add(x = 10, y = 15
+... )
+25
+>>> add(y = 15, x = 2)
+17
+
+Documenting the python help menu
+>>> def greeting(name):
+...     '''
+...     Issues a greeting
+...     '''
+...     print('Hello', name)
+... 
+>>> greeting('me')
+Hello me
+>>> help(greeting)
+
+
+Function in a script
+	import csv
+	def portfolio_cost(filename):
+	    '''
+	    Computes total shares * price for a CSV file with name, data, shares, and price data
+	    '''
+	    
+	    total = 0.0
+	    with open(filename, 'r') as f:
+	        rows = csv.reader(f)
+	        headers = next(f)           # Skip a single line of input
+	        for row in rows:
+	            row[2] = int(row[2])
+	            row[3] = float(row[3])
+	            total += row[2] * row[3]
+	    return total
+	
+	
+	total = portfolio_cost('data.csv')
+	print('Total cost', total)
+
+
+~/pytesting/learning $ ./port.py 
+Total cost 44671.15
+~/pytesting/learning $ -i port.py
+bash: -i: command not found
+~/pytesting/learning $ ./port.py -i
+Total cost 44671.15
+~/pytesting/learning $ python3 -i port.py
+Total cost 44671.15
+>>> portfolio_cost('data2.csv')
+44671.15
+>>> quit()
+~/pytesting/learning $ python3 -i port.py
+Total cost 44671.15
+>>> import glob
+>>> files = glob.glob('data*.csv')
+>>> files
+['data.csv', 'data2.csv']
+>>> for filename in files:
+...     print(filename, portfolio_cost(filename))
+... 
+data.csv 44671.15
+data2.csv 44671.15
+>>> 
+
+
+Function in script with error handling
+	import csv
+	def portfolio_cost(filename):
+	    '''
+	    Computes total shares * price for a CSV file with name, data, shares, and price data
+	    '''
+	    
+	    total = 0.0
+	    with open(filename, 'r') as f:
+	        rows = csv.reader(f)
+	        headers = next(f)           # Skip a single line of input
+	#        rownum = 0
+	        for rownum, row in enumerate(rows, start = 1):         # Enumerate syntax is newer way of writing python that includes a counter
+	#            rownum += 1
+	            try:
+	                row[2] = int(row[2])
+	                row[3] = float(row[3])
+	            except ValueError as err:
+	                print('Row: ', rownum, 'Bad row: ', row)
+	                print('Row: ', rownum, 'Reason: ', err)
+	                continue    # Skips the rest of the loop to the next 'row'
+	            total += row[2] * row[3]
+	    return total
+	
+	
+	total = portfolio_cost('data3.csv')
+	print('Total cost', total)
+
+
+Better design practices with functions
+Avoid using the keyword 'Exception' for error handling. It's better to catch specific errors than all at once for best debugging practices.
+	except Exception as err:     # Exception catches all errors (dangerous)
+	
+Adding the *, argument in a function declaration forces the user to call the function with the "errors='warn'" syntax. See below for example
+	def portfolio_cost(filename, *, errors = 'warn'):  # This forces the user to type out (errors = 'warn') when calling the function. Otherwise it can be defaulted.
+	
+	portfolio_cost('data3.csv', errors = 'silent')  # This passes
+	portfolio_cost('data3.csv', 'silent')           # This crashes
+	
+            try:
+                row[2] = int(row[2])
+                row[3] = float(row[3])
+#            except Exception as err:       # Exception catches all errors (dangerous)
+            except ValueError as err:
+                if errors == 'warn':
+                    print('Row: ', rownum, 'Bad row: ', row)
+                    print('Row: ', rownum, 'Reason: ', err)
+                elif errors == 'raise':
+                    raise   # Reraises the last exception
+                else:
+                    pass    # Ignore
+                
+                continue    # Skips the rest of the loop to the next 'row'
+	
+	
+
+
+LESSON 5
+
+
+Tuple
+A tuple is a bunch of data values packed into a single data structure. It behaves a lot like an array with length and indexing. They are kind of like a row in a database or file, kind of like a record.
+Consider packing/unpacking
+You cannot modify the values within a tuple.
+
+	>>> t = ('AA', '2011-06-07', 100, 32.2)
+	>>> t
+	('AA', '2011-06-07', 100, 32.2)
+	>>> t[0]
+	'AA'
+	>>> t[1]
+	'2011-06-07'
+	>>> t[2] * t[3]
+	3220.0000000000005
+	>>> name, date, shares, price = t
+	>>> name
+	'AA'
+	>>> date
+	'2011-06-07'
+	>>> shares
+	100
+	>>> price
+	32.2
+	>>> t[2] = 50
+	Traceback (most recent call last):
+	  File "<stdin>", line 1, in <module>
+	TypeError: 'tuple' object does not support item assignment
+	
+List
+A list is much like a Tuple though the contents may be modified and are usually the same dataType. 
+	
+	>>> names = ['IBM', 'YHOO', 'AA', 'CAT']
+	>>> len(names)
+	4
+	>>> names[1]
+	'YHOO'
+	>>> names
+	['IBM', 'YHOO', 'AA', 'CAT']
+	>>> names.append('IBM')
+	>>> names
+	['IBM', 'YHOO', 'AA', 'CAT', 'IBM']
+	>>> names.insert(1, 'FB')
+	>>> names
+	['IBM', 'FB', 'YHOO', 'AA', 'CAT', 'IBM']
+	>>> names[2] = 'HPE
+	  File "<stdin>", line 1
+	    names[2] = 'HPE
+	                  ^
+	SyntaxError: EOL while scanning string literal
+	>>> names[2] = 'HPE'
+	>>> names
+	['IBM', 'FB', 'HPE', 'AA', 'CAT', 'IBM']
+	>>> nums = [1, 2, 3, 4]
+	>>> nums
+	[1, 2, 3, 4]
+	
+
+Set
+A set is a collection of data that is unique. Normally used to eliminate duplicates or check for membership in a grouping of data.
+
+	>>> distinct_names = { '1', '2', '3', '4', '1', '3', '5'}
+	>>> distinct_names
+	{'4', '5', '1', '3', '2'}
+	>>> names = ['IBM', 'YHOO', 'AA', 'CAT', 'IBM']
+	>>> names
+	['IBM', 'YHOO', 'AA', 'CAT', 'IBM']
+	>>> set(names)
+	{'AA', 'IBM', 'CAT', 'YHOO'}
+	>>> names
+	['IBM', 'YHOO', 'AA', 'CAT', 'IBM']
+	>>> 'AA' in distinct_names
+	False
+	>>> 'JJ' in distinct_names
+	False
+	>>> '1' in distinct_names
+	True
+	
+	
+Dictionary
+A dictionary is a mapping of keys to some other value that you specify. You can also do a dictionary of dictionaries.
+	
+	>>> prices = {
+	...     'IBM': 91.2,
+	...     'MSFT': 45.23,
+	...     'AA': 32.4,
+	...     'YHOO': 9.23
+	... }
+	>>> prices
+	{'IBM': 91.2, 'MSFT': 45.23, 'AA': 32.4, 'YHOO': 9.23}
+	>>> prices['IBM']
+	91.2
+	>>> prices
+	{'IBM': 91.2, 'MSFT': 45.23, 'AA': 32.4, 'YHOO': 9.23}
+	>>> prices['IBM'] = 87.23
+	>>> prices
+	{'IBM': 87.23, 'MSFT': 45.23, 'AA': 32.4, 'YHOO': 9.23}
+	>>> 'IBM' in prices
+	True
+	>>> 'JJ' in prices
+	False
+	>>> items = [ ('AA', 100, 32.2), ('MSFT', 50, 91.2) ]
+	>>> items
+	[('AA', 100, 32.2), ('MSFT', 50, 91.2)]
+	>>> prices = {
+	...     'IBM': { 'current': 91.23, 'high': 94.23, 'low': 91.05 }
+	... }
+	>>> prices
+	{'IBM': {'current': 91.23, 'high': 94.23, 'low': 91.05}}
+	>>> prices['IBM']
+	{'current': 91.23, 'high': 94.23, 'low': 91.05}
+	>>> prices['IBM']['low']
+	91.05
+	>>> prices['IBM']['current']
+	91.23
+	
+
+
+LESSON 6 
+
+
+Classes
+Attributes in a class are built on the notion that you can only do 1 of 3 things with them. 
+	1. Get the attribute
+		a. s = h.name
+			i. 'AA'
+	2. Set the attribute
+		a. h.name = 'LS'
+			i. h.name
+			ii. 'LS'
+	3. Delete the attribute
+		a. del h.name
+		b. h.name
+			i. AttributeError: 'Holding' object has no attribute 'name'
+
+@classmethod
+	This is how you create multiple constructors for a given class. Also enables you to abstract the class name from the function so it can be generic.
+	
+Inheritance
+When you want to have constructors on derived classes as well as the parent class, the derived class has to also initialize the parent constructor attributes as well. 
+
+You can import the Abstract Base Class library in python to enforce the implementation of certain functions in the base class
+
+	import abc as ABC, abstractmethod
+	
+	@abstractmethod
+	def headings(self, headers):
+		pass
+	
+	@abstractmethod
+	def row(self, rowdata):
+		pass
+
+
+

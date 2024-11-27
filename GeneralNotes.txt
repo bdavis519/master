@@ -1,0 +1,202 @@
+Special Variable	Description	Example
+$#	Total number of arguments entered on the command line.	./arguments.sh foobar example.com
+		echo $#
+		2
+$*	List out all the command line arguments as a single word.	./arguments.sh foobar example.com
+		echo $*
+		"foobar example.com"
+$@	List out all the command line arguments as a space delimited words.	./arguments.sh foobar example.com
+echo $@
+"foobar" "example.com"
+$0	Contains the name of the script itself.	./arguments.sh foobar example.com
+echo $0
+"arguments.sh"
+$?	Echo's the exit status of last command entered. 0 if command ran successfully. 	echo $?
+0
+$$	Echo PID of current shell.	echo $$
+12354
+
+
+
+
+Command line arguments:
+
+pushd <directory>	pushes a directory on the stack and it becomes the current working directory
+pushd -n <directory>	pushes a directory on the stack without changing current directory
+pushd <+2>	change to the second directory from the top on the stack
+pushd <-2>	change to the second directory from the bottom of the stack
+dirs -v	display all the current directories in the stack
+
+
+history	see a list of previous commands
+!45	run command #45 in the history list
+!!	repeat the last command. Nice if you forget to use sudo. See example below:
+	      mv ./my_script.sh /usr/local/bin/
+	      sudo !!
+ctrl + r	interactive search through history. Repeated presses of ctrl + r iterate backwards to the previous command.
+history | grep <string>	display only the history with <string> in the command
+df -h	shows free disk space on linux system.
+      -h is for a human readable format (MB and GB)
+usermod -l <newusername> <oldusername>	Change the user name of a user in linux. User needs to be signed out.
+
+When you run into ".nfs…… Device or resource busy" and cannot delete a directory:
+	lsof +D ./ | awk '{print $2}' | tail -n +2 | xargs -r kill -9
+	
+	• awk grabs the PIDs.
+	• tail gets rid of the pesky first entry: "PID".
+	• xargs executes kill -9 on the PIDs. The -r / --no-run-if-empty, prevents kill command failure, in case lsof did not return any PID.
+
+From <https://unix.stackexchange.com/questions/11238/how-to-get-over-device-or-resource-busy/216520#216520?newreg=5330ce9bd11e464f931bba9c36891679> 
+
+
+
+[Arguments.sh]
+#This script demonstrates the use of variables entered at the command line
+Echo "My name is $1"
+Echo "I work for $2"
+
+./arguments.sh foobar example.com
+
+My name is foobar
+I work for example.com
+
+
+To find all instances of a file with ".seq" extension:
+	find . -name '*.seq' -print
+
+To find all instances of a file with ".seq" extension and grep the file for "acsControlClient":
+	find . -name '*.seq' -exec grep acsControlClient {} \; -print
+ 
+Search only git associated files:
+	git grep
+
+Use grep and exclude specific directories:
+	grep -r --exclude-dir="CodeGenSource" --exclude-dir="csf_fileset" --exclude-dir="export" "PUpGen"
+
+Use grep to show lines after:
+	grep -A 2 "string"
+
+Use grep to show lines before:
+	grep -B 2 "string"
+
+Use grep to show lines before and after:
+	grep -C 2 "string"
+
+Symbolic Link:
+
+ln -s [options] [filename] [linkname]
+
+
+
+
+
+To set and environment variable:
+	export JAVA_HOME=/usr/bin/java
+	
+To show a single env variable:
+	echo $JAVA_HOME
+	
+To show all env variables:
+	set
+	
+To check if a file is 32 bit or 64 bit or to see if it is dynamically or statically linked:
+	file <filename.so>
+	
+	
+remove everything until last appearance of /:
+	sed 's/.*\///'
+	
+	From <https://unix.stackexchange.com/questions/44735/how-to-get-only-filename-using-sed> 
+	
+
+You can use find to get the desired source files, and then use cp within the -exec predicate of find to copy the files to the desired destination. With GNU cp:
+	find /dir1/ -type f \( -name '*.txt' -o -name '*.jpg' \) -exec cp -t /dir2/ {} +
+
+From <https://stackoverflow.com/questions/42431682/how-to-copy-all-files-from-a-directory-and-its-subdirectories-to-another-dir> 
+
+
+
+Working with Tar files
+To Compress:
+	tar -czvf <filename.tar.gz> <path_to_files>
+
+To Uncompress:
+	tar -xzvf <filename.tar.gz>
+
+
+
+VIM NOTES:
+Keys	Description
+J	Move cursor down one line.
+K	Move cursor up one line.
+H	Move cursor left one character.
+L	Move cursor right one character.
+W	Move forward one word.
+B	Move backward one word.
+YY	Yank a line. (I.E. copy to clipboard)
+P	Paste a line immediately below the cursor.
+DD	Delete the line the cursor is on. (Also copies deleted line to clipboard)
+U	Undo last command.
+Shift + V	Enters visual line mode. 
+Esc	Exit insert mode
+Ctrl + C
+Ctrl + [
+:W	Write the buffer/Save the file
+:q	Close the file
+:q!
+:quit
+o	Insert new line below and move to insert mode
+O	Insert new line above and move to insert mode
+/	Find 
+n	Next occurrence
+N	Previous occurrence
+	
+
+Resume stuff:
+	• Resume is meant to bypass the gatekeeper who reads your resume. 
+	• Only go back 10-15 years. 
+	• Use AI to come up with additional research but still make it your own and not copy/paste.
+	• Do research to check job descriptions to see what hiring managers are looking for.
+	• Applicant Tracking System - See Chronilogical Resume for submitting applications digitally
+
+Shoot for 5-7 accomplishment statements
+
+Really strive for metrics in your accomplishments
+
+You may have heard that there was a major reorg at my company, and my job was impacted by that. There isn't a stigma around lay offs these days like there were 25 years ago. 
+
+Use Arial or Calibri
+
+Be consise, no pronouns. Start with strong action words
+
+
+LayOff Stuff
+layoffqa.boeing.com
+
+goboeing.co/layoffs
+
+How to access worklife from home: 
+boeing.service-now.com/worklife
+
+Payroll:
+If resign prior to Jan 17th, no severance pay.
+No deductions for 401k, health insurance
+PTO payout will be a part of the final paycheck. 
+
+Cobra extends medical/dental for up to 18 months after layoff date.
+The first 3 months are a subsidized COBRA rate and then the next 15 months are 102% cost the premium that Boeing pays for your insurance benefits.
+
+1-866-473-2016:  Health and Insurance
+
+Health Equity charges a monthly admin fee for balances under $2500. 
+
+EAP - Spring Health lasts for up to 18 months after layoff
+
+Boeing 401k Financial stuff
+
+
+If I don't pay off the 401k loan, I'll need to set up a monthly payment to Fidelity after the layoff date. 
+
+If need unemployment, need to wait until no longer receiving wages. 
+
+LHH Active Placement Support Overview: 
